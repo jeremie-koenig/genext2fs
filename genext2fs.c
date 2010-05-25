@@ -160,6 +160,15 @@ static int blocksize = 1024;
 #define RESERVED_BLOCKS       5/100
 #define MAX_RESERVED_BLOCKS  25/100
 
+/* The default value for s_creator_os. */
+#if defined(__GNU__)
+# define CREATOR_OS  1 /* Hurd */
+#elif defined(__FreeBSD__)
+# define CREATOR_OS  3 /* FreeBSD */
+#else
+# define CREATOR_OS  0 /* Linux */
+#endif
+
 
 // inode block size (why is it != BLOCKSIZE ?!?)
 /* The field i_blocks in the ext2 inode stores the number of data blocks
@@ -1926,7 +1935,8 @@ swap_badfs(filesystem *fs)
 
 // initialize an empty filesystem
 static filesystem *
-init_fs(int nbblocks, int nbinodes, int nbresrvd, int holes, uint32 fs_timestamp)
+init_fs(int nbblocks, int nbinodes, int nbresrvd, int holes,
+		uint32 fs_timestamp, uint32 creator_os)
 {
 	uint32 i;
 	filesystem *fs;
@@ -1994,6 +2004,7 @@ init_fs(int nbblocks, int nbinodes, int nbresrvd, int holes, uint32 fs_timestamp
 	fs->sb.s_wtime = fs_timestamp;
 	fs->sb.s_magic = EXT2_MAGIC_NUMBER;
 	fs->sb.s_lastcheck = fs_timestamp;
+	fs->sb.s_creator_os = creator_os;
 
 	// set up groupdescriptors
 	for(i=0, bbmpos=first_block+1+gdsz, ibmpos=bbmpos+1, itblpos=ibmpos+1;
@@ -2464,6 +2475,7 @@ showhelp(void)
 	"  -i, --bytes-per-inode <bytes per inode>\n"
 	"  -N, --number-of-inodes <number of inodes>\n"
 	"  -m, --reserved-percentage <percentage of blocks to reserve>\n"
+	"  -o, --creator-os <os>      'linux', 'hurd', 'freebsd' or a numerical value.\n"
 	"  -g, --block-map <path>     Generate a block map file for this path.\n"
 	"  -e, --fill-value <value>   Fill unallocated blocks with value.\n"
 	"  -z, --allow-holes          Allow files with holes.\n"
@@ -2485,6 +2497,29 @@ showhelp(void)
 extern char* optarg;
 extern int optind, opterr, optopt;
 
+// parse the value for -o <os>
+int
+lookup_creator_os(const char *name)
+{
+	static const char *const creators[] =
+		{"linux", "hurd", "2", "freebsd", NULL};
+	char *endptr;
+	int i;
+
+	// numerical value ?
+	i = strtol(name, &endptr, 0);
+	if(name[0] && *endptr == '\0')
+		return i;
+
+	// symbolic name ?
+	for(i=0; creators[i]; i++)
+	       if(strcasecmp(creators[i], name) == 0)
+		       return i;
+
+	// whatever ?
+	return -1;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -2494,6 +2529,7 @@ main(int argc, char **argv)
 	float bytes_per_inode = -1;
 	float reserved_frac = -1;
 	int fs_timestamp = -1;
+	int creator_os = CREATOR_OS;
 	char * fsout = "-";
 	char * fsin = 0;
 	char * dopt[MAX_DOPT];
@@ -2522,6 +2558,7 @@ main(int argc, char **argv)
 	  { "bytes-per-inode",	required_argument,	NULL, 'i' },
 	  { "number-of-inodes",	required_argument,	NULL, 'N' },
 	  { "reserved-percentage", required_argument,	NULL, 'm' },
+	  { "creator-os",	required_argument,	NULL, 'o' },
 	  { "block-map",	required_argument,	NULL, 'g' },
 	  { "fill-value",	required_argument,	NULL, 'e' },
 	  { "allow-holes",	no_argument, 		NULL, 'z' },
@@ -2537,11 +2574,11 @@ main(int argc, char **argv)
 
 	app_name = argv[0];
 
-	while((c = getopt_long(argc, argv, "x:d:D:B:b:i:N:m:g:e:zfqUPhVv", longopts, NULL)) != EOF) {
+	while((c = getopt_long(argc, argv, "x:d:D:B:b:i:N:m:o:g:e:zfqUPhVv", longopts, NULL)) != EOF) {
 #else
 	app_name = argv[0];
 
-	while((c = getopt(argc, argv,      "x:d:D:B:b:i:N:m:g:e:zfqUPhVv")) != EOF) {
+	while((c = getopt(argc, argv,      "x:d:D:B:b:i:N:m:o:g:e:zfqUPhVv")) != EOF) {
 #endif /* HAVE_GETOPT_LONG */
 		switch(c)
 		{
@@ -2566,6 +2603,9 @@ main(int argc, char **argv)
 				break;
 			case 'm':
 				reserved_frac = SI_atof(optarg) / 100;
+				break;
+			case 'o':
+				creator_os = lookup_creator_os(optarg);
 				break;
 			case 'g':
 				gopt[gidx++] = optarg;
@@ -2612,6 +2652,8 @@ main(int argc, char **argv)
 
 	if(blocksize != 1024 && blocksize != 2048 && blocksize != 4096)
 		error_msg_and_die("Valid block sizes: 1024, 2048 or 4096.");
+	if(creator_os < 0)
+		error_msg_and_die("Creator OS unknown.");
 
 	hdlinks.hdl = (struct hdlink_s *)malloc(hdlink_cnt * sizeof(struct hdlink_s));
 	if (!hdlinks.hdl)
@@ -2657,7 +2699,8 @@ main(int argc, char **argv)
 		}
 		if(fs_timestamp == -1)
 			fs_timestamp = time(NULL);
-		fs = init_fs(nbblocks, nbinodes, nbresrvd, holes, fs_timestamp);
+		fs = init_fs(nbblocks, nbinodes, nbresrvd, holes,
+				fs_timestamp, creator_os);
 	}
 	
 	populate_fs(fs, dopt, didx, squash_uids, squash_perms, fs_timestamp, NULL);
