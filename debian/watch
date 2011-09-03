@@ -1,0 +1,2 @@
+version=3
+opts=uversionmangle=s/[a-z]+(1-9)$/-$1/ http://sf.net/genext2fs/genext2fs-(.*)\.tar\.gz

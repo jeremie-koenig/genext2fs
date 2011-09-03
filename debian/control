@@ -1,0 +1,15 @@
+Source: genext2fs
+Section: admin
+Priority: optional
+Maintainer: Franz Pletz <fpletz@franz-pletz.org>
+Build-Depends: debhelper (>> 5), autoconf, automake (>= 1.10)
+Standards-Version: 3.8.3
+
+Package: genext2fs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ext2 filesystem generator for embedded systems
+ genext2fs is meant to generate an ext2 filesystem  as a normal
+ (non-root) user. It doesn't require you to mount the image file
+ to copy files on it. It doesn't even require you to be the
+ superuser to make device nodes.
