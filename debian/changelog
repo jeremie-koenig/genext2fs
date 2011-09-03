@@ -4,7 +4,8 @@ genext2fs (1.4.1-3) UNRELEASED; urgency=low
   * Packaging cleanup:
     - update autotools dependencies; 
     - update to debhelper 8;
-    - switch to source format 3.0 (quilt).
+    - switch to source format 3.0 (quilt);
+    - bump Standards-Version to 3.9.2.
   * debian/patches/blocksize+creator.diff: New patch, add options -B and -o
     to select the block size and creator OS (closes: 562999).
   * Add Vcs-Git and Vcs-Browser fields to debian/control.
