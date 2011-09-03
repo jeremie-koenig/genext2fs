@@ -1,13 +1,26 @@
 Index: genext2fs/configure.in
 ===================================================================
---- genext2fs.orig/configure.in	2011-09-03 06:26:07.000000000 +0200
-+++ genext2fs/configure.in	2011-09-03 06:27:55.000000000 +0200
+--- genext2fs.orig/configure.in	2011-09-03 21:28:05.000000000 +0200
++++ genext2fs/configure.in	2011-09-03 21:29:54.000000000 +0200
 @@ -8,7 +8,7 @@
  builtin(include, [m4/ac_func_scanf_can_malloc.m4])dnl
  
  AM_INIT_AUTOMAKE(genext2fs,1.4.1)
 -AC_CONFIG_HEADER([config.h])
-+AM_CONFIG_HEADER(config.h)
++AM_CONFIG_HEADER([config.h])
  
  AC_GNU_SOURCE
  
+Index: genext2fs/m4/ac_func_scanf_can_malloc.m4
+===================================================================
+--- genext2fs.orig/m4/ac_func_scanf_can_malloc.m4	2011-09-03 21:28:49.000000000 +0200
++++ genext2fs/m4/ac_func_scanf_can_malloc.m4	2011-09-03 21:29:41.000000000 +0200
+@@ -9,7 +9,7 @@
+ # --------------------------------------
+ AC_DEFUN([AC_FUNC_SCANF_CAN_MALLOC],
+   [ AC_CHECK_HEADERS([stdlib.h])
+-    AC_CACHE_CHECK([whether scanf can malloc], [ac_scanf_can_malloc],
++    AC_CACHE_CHECK([whether scanf can malloc], [ac_cv_func_scanf_can_malloc],
+     [ AC_RUN_IFELSE(
+       [ AC_LANG_PROGRAM(
+         [
