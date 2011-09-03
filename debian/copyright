@@ -1,7 +1,8 @@
 This package was debianized by David Kimdon <dwhedon@debian.org> on
 Sat, 14 Jul 2001 13:24:49 -0700.
 
-The current Debian Maintainer is Franz Pletz <fpletz@franz-pletz.org>.
+The current Debian Maintainer is Jérémie Koenig <jk@jk.fr.eu.org>.
+The previous Debian Maintainer was Franz Pletz <fpletz@franz-pletz.org>.
 
 It was downloaded from http://genext2fs.sourceforge.net/
 Upstream Author: Xavier Bestel <xavier.bestel@aplio.fr>
