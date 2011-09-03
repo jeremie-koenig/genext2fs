@@ -1,4 +1,4 @@
-genext2fs (1.4.1-3) UNRELEASED; urgency=low
+genext2fs (1.4.1-3) unstable; urgency=low
 
   * New maintainer (closes: 579369).
   * Packaging cleanup:
@@ -11,7 +11,7 @@ genext2fs (1.4.1-3) UNRELEASED; urgency=low
   * Add Vcs-Git and Vcs-Browser fields to debian/control.
   * Add debian/gbp.conf (configuration for git-buildpackage).
 
- -- Jérémie Koenig <jk@jk.fr.eu.org>  Sat, 03 Sep 2011 05:54:53 +0200
+ -- Jérémie Koenig <jk@jk.fr.eu.org>  Sat, 03 Sep 2011 21:35:48 +0200
 
 genext2fs (1.4.1-2.2) unstable; urgency=low
 
