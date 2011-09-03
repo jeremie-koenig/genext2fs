@@ -2,7 +2,8 @@ Source: genext2fs
 Section: admin
 Priority: optional
 Maintainer: Jérémie Koenig <jk@jk.fr.eu.org>
-Build-Depends: debhelper (>> 5), autoconf, automake (>= 1.10)
+Build-Depends: debhelper (>> 5), autoconf (>= 2.59), automake (>= 1.10)
+Build-Conflicts: autoconf2.13
 Standards-Version: 3.8.3
 
 Package: genext2fs
