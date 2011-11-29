@@ -1,10 +1,10 @@
-genext2fs (1.4.1-4) UNRELEASED; urgency=low
+genext2fs (1.4.1-4) unstable; urgency=low
 
   * debian/patches/byteswap_fix.diff: New patch by Samuel Thibault,
     fix a segfault in the byte swapping code on little-endian architectures
     (closes: 644776).
 
- -- Jérémie Koenig <jk@jk.fr.eu.org>  Tue, 29 Nov 2011 17:18:12 +0100
+ -- Jérémie Koenig <jk@jk.fr.eu.org>  Tue, 29 Nov 2011 17:42:14 +0100
 
 genext2fs (1.4.1-3) unstable; urgency=low
 
