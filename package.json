@@ -1,0 +1,32 @@
+{
+  "name": "genext2fs",
+  "version": "1.4.1",
+  "description": "ext2 filesystem generator for embedded systems",
+  "bin": "genext2fs",
+  "main": "index.js",
+  "scripts": {
+    "BigRedButton": "scripts/BigRedButton",
+    "install": "prebuild --download https://github.com/NodeOS/genext2fs/releases/download/v{version}/{platform}-{arch}.tar.gz",
+    "start": "./genext2fs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeOS/genext2fs.git"
+  },
+  "keywords": [
+    "ext2",
+    "ext3",
+    "ext4",
+    "filesystem",
+    "image"
+  ],
+  "author": "Xavier Bestel <xavier.bestel@free.fr>",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/NodeOS/genext2fs/issues"
+  },
+  "homepage": "https://github.com/NodeOS/genext2fs#readme",
+  "dependencies": {
+    "prebuild": "piranna/prebuild"
+  }
+}
