@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
 
 #
-# Build genfatfs
+# Build genext2fs
 #
 
-make || exit 1
+./autogen.sh &&
+./configure  &&
+make         || exit 1
 
 #
 # Pack genfatfs in a node-gyp compatible way
@@ -37,8 +39,8 @@ esac
 
 
 
-mkdir -p prebuilds                                           &&
-tar -cf - genfatfs | gzip > prebuilds/$PLATFORM-$ARCH.tar.gz || exit 4
+mkdir -p prebuilds                                            &&
+tar -cf - genext2fs | gzip > prebuilds/$PLATFORM-$ARCH.tar.gz || exit 4
 
 #
 # Upload release to GitHub

@@ -1,3 +1,7 @@
+genext2fs
+=========
+[![Build Status](https://semaphoreci.com/api/v1/nodeos/genext2fs/branches/master/badge.svg)](https://semaphoreci.com/nodeos/genext2fs)
+
 genext2fs generates an ext2 filesystem as a normal (non-root) user.
 It does not require you to mount the image file to copy files on it,
 nor does it require that you become the superuser to make device nodes.
