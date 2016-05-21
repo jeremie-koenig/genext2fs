@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+
+./autogen.sh || exit $?
+
+(
+  mkdir -p build &&
+  cd build       || exit $?
+
+  ../configure &&
+  make         || exit $?
+) || exit $?
+
+ln -fs build/genext2fs genext2fs || exit $?

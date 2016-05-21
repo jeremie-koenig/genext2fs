@@ -17,3 +17,5 @@ config.log
 config.status
 stamp-h1
 genext2fs.o
+npm-debug.log
+build/

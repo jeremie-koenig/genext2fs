@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "BigRedButton": "scripts/BigRedButton",
-    "install": "prebuild --download https://github.com/NodeOS/genext2fs/releases/download/v{version}/{platform}-{arch}.tar.gz",
+    "install": "prebuild-install --download https://github.com/NodeOS/genext2fs/releases/download/v{version}/{platform}-{arch}.tar.gz || scripts/install",
     "start": "./genext2fs"
   },
   "repository": {
@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/NodeOS/genext2fs#readme",
   "dependencies": {
-    "prebuild": "piranna/prebuild"
+    "prebuild-install": "^1.0.1"
   }
 }
