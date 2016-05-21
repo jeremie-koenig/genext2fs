@@ -29,5 +29,8 @@
   "homepage": "https://github.com/NodeOS/genext2fs#readme",
   "dependencies": {
     "prebuild-install": "^1.0.1"
+  },
+  "devDependencies": {
+    "prebuild": "^4.2.1"
   }
 }
