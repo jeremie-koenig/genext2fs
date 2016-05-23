@@ -29,6 +29,8 @@ esac
 
 MACHINE="`uname -m`"
 case $MACHINE in
+  'i686') ARCH=ia32 ;;
+
   'x86_64') ARCH=x64 ;;
 
   *)

@@ -11,4 +11,4 @@
   make         || exit $?
 ) || exit $?
 
-ln -fs build/genext2fs genext2fs || exit $?
+cp build/genext2fs genext2fs || exit $?
