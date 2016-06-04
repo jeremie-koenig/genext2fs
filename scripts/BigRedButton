@@ -5,7 +5,7 @@
 # Build genext2fs
 #
 
-scripts/install || exit 1
+scripts/build || exit 1
 
 
 #

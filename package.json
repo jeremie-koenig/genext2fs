@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "BigRedButton": "scripts/BigRedButton",
-    "install": "prebuild-install --download https://github.com/NodeOS/genext2fs/releases/download/v{version}/{platform}-{arch}.tar.gz || scripts/install",
+    "build": "scripts/build",
+    "install": "prebuild-install -d https://github.com/NodeOS/genext2fs/releases/download/v{version}/{platform}-{arch}.tar.gz || npm run build",
     "start": "./genext2fs",
     "test": "./test.sh"
   },
