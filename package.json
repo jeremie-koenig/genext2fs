@@ -1,6 +1,6 @@
 {
   "name": "genext2fs",
-  "version": "1.4.1",
+  "version": "1.4.1-0",
   "description": "ext2 filesystem generator for embedded systems",
   "bin": "genext2fs",
   "main": "index.js",
@@ -32,6 +32,6 @@
     "prebuild-install": "1.0.2"
   },
   "devDependencies": {
-    "prebuild": "^4.2.1"
+    "prebuild": "^4.2.2"
   }
 }
