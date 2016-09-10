@@ -51,6 +51,7 @@
 // 	 6 Jan 2003	Erik Andersen <andersee@debian.org> added
 // 			mkfs.jffs2 compatible device table support,
 // 			along with -q, -P, -U
+// 	10 Sep 2016	Bugfix: allow `#` on files paths <piranna@gmail.com>
 
 
 #include <config.h>
@@ -1534,8 +1535,6 @@ add2fs_from_file(filesystem *fs, uint32 this_nod, FILE * fh, uint32 fs_timestamp
 		mode = uid = gid = major = minor = 0;
 		start = 0; increment = 1; count = 0;
 		lineno++;
-		if((c = strchr(line, '#')))
-			*c = 0;
 		if (path) {
 			free(path);
 			path = NULL;
@@ -1544,15 +1543,28 @@ add2fs_from_file(filesystem *fs, uint32 this_nod, FILE * fh, uint32 fs_timestamp
 			free(path2);
 			path2 = NULL;
 		}
-		nbargs = sscanf (line, "%" SCANF_PREFIX "s %c %lo %lu %lu %lu %lu %lu %lu %lu",
-					SCANF_STRING(path), &type, &mode, &uid, &gid, &major, &minor,
-					&start, &increment, &count);
-		if(nbargs < 3)
+
+		// `sscanf()` is used twice to allow to have `#` character in the file path
+		if(line[0] == '\n' || line[0] == '#')
+			continue;
+		nbargs = sscanf(line, "%" SCANF_PREFIX "s", SCANF_STRING(path));
+		if(!nbargs)
 		{
-			if(nbargs > 0)
-				error_msg("device table line %d skipped: bad format for entry '%s'", lineno, path);
+			error_msg("device table line %d skipped: file path not provided", lineno);
 			continue;
 		}
+		char* line2 = line+strlen(path);
+		if((c = strchr(line2, '#')))
+			*c = 0;
+		nbargs = sscanf(line2, " %c %lo %lu %lu %lu %lu %lu %lu %lu", &type, &mode,
+										&uid, &gid, &major, &minor, &start, &increment, &count);
+		if(nbargs < 2)
+		{
+			error_msg("device table line %d skipped: bad format for entry '%s'",
+								lineno, path);
+			continue;
+		}
+
 		mode &= FM_IMASK;
 		path2 = strdup(path);
 		name = basename(path);
