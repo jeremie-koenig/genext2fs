@@ -2,8 +2,8 @@ Source: genext2fs
 Section: admin
 Priority: optional
 Maintainer: Jérémie Koenig <jk@jk.fr.eu.org>
-Vcs-Git: git://github.com/jeremie-koenig/genext2fs.git
-Vcs-Browser: http://github.com/jeremie-koenig/genext2fs
+Vcs-Git: https://github.com/jeremie-koenig/genext2fs.git
+Vcs-Browser: https://github.com/jeremie-koenig/genext2fs
 Build-Depends: debhelper (>> 8), autoconf (>= 2.59), automake (>= 1.10)
 Build-Conflicts: autoconf2.13
 Standards-Version: 3.9.2
